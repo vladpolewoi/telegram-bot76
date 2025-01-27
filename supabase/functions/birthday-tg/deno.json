@@ -1,6 +1,5 @@
 {
   "imports": {
-    "date-fns": "npm:date-fns@^4.1.0",
-    "grammy": "npm:grammy@^1.34.0"
+    "@/": "./../../../src/"
   }
 }

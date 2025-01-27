@@ -3,9 +3,7 @@
     "editor.defaultFormatter": "denoland.vscode-deno"
   },
   "deno.enable": true,
-  "deno.enablePaths": [
-    "supabase/functions"
-  ],
+  "deno.enablePaths": ["src", "supabase"],
   "deno.lint": true,
   "deno.unstable": [
     "bare-node-builtins",
