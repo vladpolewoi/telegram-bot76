@@ -1,10 +1,5 @@
 import { GoogleAPI } from "https://deno.land/x/google_deno_integration/mod.ts";
-
-export interface MemberRow {
-  name: string;
-  birthday: string;
-  age: number;
-}
+import { Member } from "../entity/member.ts";
 
 export class GssService {
   private static instance: GssService;
@@ -41,13 +36,13 @@ export class GssService {
     return GssService.instance;
   }
 
-  public async getMembers(): Promise<MemberRow[]> {
+  public async getMembers(): Promise<Member[]> {
     try {
       const data = await this.api.get(
         `https://sheets.googleapis.com/v4/spreadsheets/${this.SHEET_ID}/values/Amigos%20Members%20List`,
       );
 
-      return data?.values?.filter((row) => row.length).map(
+      return data?.values?.filter((row: string[]) => row.length).map(
         this.parseSheetValue,
       );
     } catch (error) {
@@ -56,7 +51,7 @@ export class GssService {
     }
   }
 
-  public async getTodayBirthdayMembers(): Promise<MemberRow[]> {
+  public async getTodayBirthdayMembers(): Promise<Member[]> {
     const members = await this.getMembers();
 
     const today = new Date();
@@ -69,7 +64,7 @@ export class GssService {
     });
   }
 
-  private parseSheetValue(row: string[]): MemberRow {
+  private parseSheetValue(row: string[]): Member {
     const birthday = row[2];
     const year = birthday?.split(".")[2];
     const age = new Date().getFullYear() - Number(year);
